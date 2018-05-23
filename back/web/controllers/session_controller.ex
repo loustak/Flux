@@ -5,20 +5,19 @@ defmodule Flux.SessionController do
     case authenticate(params) do
       {:ok, user} ->
         conn = Flux.Guardian.Plug.sign_in(conn, user, %{claim: "access"}, ttl: {30, :days})
-        jwt = Flux.Guardian.Plug.current_token(conn)
+        token = Flux.Guardian.Plug.current_token(conn)
 
         conn
         |> put_status(:created)
-        |> render("show.json", user: user, jwt: jwt)
+        |> render("session.json", user: user, token: token)
       :error ->
         conn
         |> put_status(:unauthorized)
-        |> render("error.json")
+        |> render("auth_error.json")
     end
   end
 
   def delete(conn, _params) do
-
     IO.puts Flux.Guardian.Plug.current_token(conn)
     Flux.Guardian.Plug.sign_out(conn)
     IO.puts Flux.Guardian.Plug.current_token(conn)
@@ -39,14 +38,7 @@ defmodule Flux.SessionController do
       {:error, _reason} ->
         conn
         |> put_status(:unauthorized)
-        |> render("forbidden.json", error: "not authenticated")
     end
-  end
-
-  def unauthenticated(conn, _params) do
-    conn
-    |> put_status(:forbidden)
-    |> render(Flux.SessionView, "forbidden.json", error: "not Authenticated")
   end
 
   defp authenticate(%{"email" => email, "password" => password}) do

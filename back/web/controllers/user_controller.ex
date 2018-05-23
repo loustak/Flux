@@ -11,7 +11,7 @@ defmodule Flux.UserController do
       {:ok, user} ->
         conn
         |> Flux.Guardian.Plug.sign_in(user)
-        |> send_resp(200, Poison.encode!(%{status: "success"}))
+        |> render(Flux.UserView, "user.json", user: user)
 
       {:error, changeset} ->
         conn

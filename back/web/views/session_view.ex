@@ -1,30 +1,22 @@
 defmodule Flux.SessionView do
   use Flux.Web, :view
 
-  def render("show.json", %{user: user, jwt: jwt}) do
+  def render("session.json", %{user: user, token: token}) do
     %{
-      user: render_one(user, Flux.UserView, "user.json"),
-      token: jwt
+      token: token,
+      user: render_one(user, Flux.UserView, "user.json")
     }
+  end
+
+  def render("auth_error.json", _) do
+    %{error: "could not authentificate the user"}
   end
 
   def render("token.json", %{token: token}) do
     %{token: token}
   end
 
-  def render("error.json", _) do
-    %{error: "Invalid email or password"}
-  end
-
   def render("delete.json", _) do
-    %{status: "deleted"}
-  end
-
-  def render("jwt_invalid.json", _) do
-    %{error: "no jwt token not found or is invalid"}
-  end
-
-  def render("forbidden.json", %{error: error}) do
-    %{error: error}
+    %{success: "token revoked with success"}
   end
 end
