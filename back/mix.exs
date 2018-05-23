@@ -19,14 +19,16 @@ defmodule Flux.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Flux.Application, []},
-      extra_applications: [:logger, :runtime_tools, :bcrypt_elixir]
+      # The main module of the application
+      mod: {Flux, []},
+      # Extra applications to load
+      extra_applications: [:logger, :bcrypt_elixir],
     ]
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(:flux), do: ["lib", "web", "flux/support"]
+  defp elixirc_paths(_),     do: ["lib", "web"]
 
   # Specifies your project dependencies.
   #
@@ -62,7 +64,7 @@ defmodule Flux.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      "flux": ["ecto.create --quiet", "ecto.migrate", "flux"]
     ]
   end
 end

@@ -10,21 +10,21 @@ config :flux,
   ecto_repos: [Flux.Repo]
 
 # Configures the endpoint
-config :flux, FluxWeb.Endpoint,
+config :flux, Flux.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "ukECiuqdFFJWngkCR4oRgeJLiO+4BX3biskdoVKfcrysQLcuxb4c2eHIEwv6GR/8",
-  render_errors: [view: FluxWeb.ErrorView, accepts: ~w(json)],
+  secret_key_base: "A1GuJaJHegJ/1WljJGQuKXrkz0lERFTdeFYsjmq8kFdIAaFyLD2J74ETD319GZvz",
+  render_errors: [view: Flux.ErrorView, accepts: ~w(json)],
   pubsub: [name: Flux.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:user_id]
+  metadata: [:request_id]
 
 # Configures the authentifcation layer
-config :test, Test.Guardian,
-  issuer: "Test",
+config :flux, Flux.Guardian,
+  issuer: "Flux",
   secret_key: "MeK7u5yrDQQqkZRTfvsXX8WvwrdN3tTcDiAwmeB2DvXnXCEmVqkRfP6fGZdesyTW"
 
 # Import environment specific config. This must remain at the bottom

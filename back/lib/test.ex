@@ -1,4 +1,4 @@
-defmodule Flux.Application do
+defmodule Flux do
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
@@ -11,7 +11,7 @@ defmodule Flux.Application do
       # Start the Ecto repository
       supervisor(Flux.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(FluxWeb.Endpoint, []),
+      supervisor(Flux.Endpoint, []),
       # Start your own worker by calling: Flux.Worker.start_link(arg1, arg2, arg3)
       # worker(Flux.Worker, [arg1, arg2, arg3]),
     ]
@@ -25,7 +25,7 @@ defmodule Flux.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    FluxWeb.Endpoint.config_change(changed, removed)
+    Flux.Endpoint.config_change(changed, removed)
     :ok
   end
 end

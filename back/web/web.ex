@@ -1,12 +1,12 @@
-defmodule FluxWeb do
+defmodule Flux.Web do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use FluxWeb, :controller
-      use FluxWeb, :view
+      use Flux.Web, :controller
+      use Flux.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -17,41 +17,56 @@ defmodule FluxWeb do
   and import those modules here.
   """
 
+  def model do
+    quote do
+      use Ecto.Schema
+
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query
+    end
+  end
+
   def controller do
     quote do
-      use Phoenix.Controller, namespace: FluxWeb
-      import Plug.Conn
-      import FluxWeb.Router.Helpers
-      import FluxWeb.Gettext
+      use Phoenix.Controller
+
+      alias Flux.Repo
+      import Ecto
+      import Ecto.Query
+
+      import Flux.Router.Helpers
+      import Flux.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/flux_web/templates",
-                        namespace: FluxWeb
+      use Phoenix.View, root: "web/templates"
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
 
-      import FluxWeb.Router.Helpers
-      import FluxWeb.ErrorHelpers
-      import FluxWeb.Gettext
+      import Flux.Router.Helpers
+      import Flux.ErrorHelpers
+      import Flux.Gettext
     end
   end
 
   def router do
     quote do
       use Phoenix.Router
-      import Plug.Conn
-      import Phoenix.Controller
     end
   end
 
   def channel do
     quote do
       use Phoenix.Channel
-      import FluxWeb.Gettext
+
+      alias Flux.Repo
+      import Ecto
+      import Ecto.Query
+      import Flux.Gettext
     end
   end
 

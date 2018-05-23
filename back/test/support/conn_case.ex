@@ -1,38 +1,44 @@
-defmodule FluxWeb.ConnCase do
+defmodule Flux.ConnCase do
   @moduledoc """
-  This module defines the test case to be used by
-  tests that require setting up a connection.
+  This module defines the flux case to be used by
+  fluxs that require setting up a connection.
 
-  Such tests rely on `Phoenix.ConnTest` and also
+  Such fluxs rely on `Phoenix.ConnFlux` and also
   import other functionality to make it easier
-  to build common datastructures and query the data layer.
+  to build and query models.
 
-  Finally, if the test case interacts with the database,
-  it cannot be async. For this reason, every test runs
+  Finally, if the flux case interacts with the database,
+  it cannot be async. For this reason, every flux runs
   inside a transaction which is reset at the beginning
-  of the test unless the test case is marked as async.
+  of the flux unless the flux case is marked as async.
   """
 
   use ExUnit.CaseTemplate
 
   using do
     quote do
-      # Import conveniences for testing with connections
-      use Phoenix.ConnTest
-      import FluxWeb.Router.Helpers
+      # Import conveniences for fluxing with connections
+      use Phoenix.ConnFlux
 
-      # The default endpoint for testing
-      @endpoint FluxWeb.Endpoint
+      alias Flux.Repo
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query
+
+      import Flux.Router.Helpers
+
+      # The default endpoint for fluxing
+      @endpoint Flux.Endpoint
     end
   end
-
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Flux.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Flux.Repo, {:shared, self()})
     end
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
-  end
 
+    {:ok, conn: Phoenix.ConnFlux.build_conn()}
+  end
 end
