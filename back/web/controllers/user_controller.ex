@@ -19,11 +19,4 @@ defmodule Flux.UserController do
         |> render(Flux.ChangesetView, "error.json", changeset: changeset)
     end
   end
-
-  def rooms(conn, _params) do
-    id = Guardian.Plug.current_resource(conn)
-    user = Repo.get_by(Flux.User, id)
-    rooms = Repo.all(Ecto.assoc(user, :rooms))
-    render(conn, Flux.RoomView, "index.json", %{rooms: rooms})
-  end
 end

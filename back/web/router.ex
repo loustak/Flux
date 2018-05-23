@@ -16,18 +16,13 @@ defmodule Flux.Router do
     pipe_through :api
 
     # public part
-    post "/users", UserController, :create
+    put "/users", UserController, :create
     post "/session", SessionController, :create
 
     # authentified part
     pipe_through :auth
 
     get "/session/refresh", SessionController, :refresh
-    get "/session", SessionController, :read
     delete "/session", SessionController, :delete
-
-    get "/users/:id/rooms", UserController, :rooms
-    resources "/rooms", RoomController, only: [:index, :create]
-    post "/rooms/:id/join", RoomController, :join
   end
 end

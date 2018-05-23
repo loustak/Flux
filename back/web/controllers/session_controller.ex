@@ -43,15 +43,6 @@ defmodule Flux.SessionController do
     end
   end
 
-  def read(conn, _params) do
-    id = Flux.Guardian.Plug.current_resource(conn)
-    user = Repo.get_by(Flux.User, id)
-
-    conn
-    |> put_status(:ok)
-    |> render(Flux.UserView, "user.json", user: user)
-  end
-
   def unauthenticated(conn, _params) do
     conn
     |> put_status(:forbidden)
