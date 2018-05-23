@@ -32,7 +32,6 @@ defmodule Flux.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-  defp deps do
     [
       # The framework used to distribute web pages
       {:phoenix, "~> 1.3.2"},
@@ -51,7 +50,6 @@ defmodule Flux.Mixfile do
       # Request authentificator
       {:guardian, "~> 1.0.1"},
     ]
-  end
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
