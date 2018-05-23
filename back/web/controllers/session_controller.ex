@@ -50,6 +50,10 @@ defmodule Flux.SessionController do
     end
   end
 
+  defp authenticate(_) do
+    :error
+  end
+
   defp check_password(user, password) do
     case user do
       nil -> Argon2.no_user_verify()
