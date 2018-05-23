@@ -16,7 +16,7 @@ defmodule Flux.Router do
     pipe_through :api
 
     # public part
-    put "/users", UserController, :create
+    post "/users", UserController, :create
     post "/session", SessionController, :create
 
     # authentified part
@@ -27,4 +27,7 @@ defmodule Flux.Router do
     get "/session/refresh", SessionController, :refresh
     delete "/session", SessionController, :delete
   end
+
+  # at this point, the ressource was not found. send a generic error
+  match :*, "/*path", Flux.ApiController, :ressource_not_found
 end

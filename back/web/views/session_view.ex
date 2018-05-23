@@ -9,11 +9,11 @@ defmodule Flux.SessionView do
   end
 
   def render("auth_error.json", _) do
-    %{error: "could not authentificate the user"}
+    %{error: %{detail: "could not authentificate the user"}}
   end
 
   def render("jwt_error.json", _) do
-    %{error: "the jwt token is invalid"}
+    %{error: %{detail: "the jwt token is invalid"}}
   end
 
   def render("token.json", %{token: token}) do
