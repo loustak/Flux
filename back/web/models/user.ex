@@ -2,10 +2,10 @@ defmodule Flux.User do
   use Flux.Web, :model
 
   schema "users" do
-    field :username, :string
     field :email, :string
     field :password_hash, :string
     field :password, :string, virtual: true
+    field :username, :string
 
     timestamps()
   end

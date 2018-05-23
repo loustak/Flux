@@ -6,6 +6,7 @@ defmodule Flux.Guardian do
   end
 
   def resource_from_claims(claims) do
+    # here we say that the subject of the token is a user id
     {:ok, %{id: claims["sub"]}}
   end
 end

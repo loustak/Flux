@@ -22,6 +22,8 @@ defmodule Flux.Router do
     # authentified part
     pipe_through :auth
 
+    delete "/users", UserController, :delete
+
     get "/session/refresh", SessionController, :refresh
     delete "/session", SessionController, :delete
   end
