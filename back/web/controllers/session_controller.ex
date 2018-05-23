@@ -60,8 +60,8 @@ defmodule Flux.SessionController do
 
   defp check_password(user, password) do
     case user do
-      nil -> Bcrypt.no_user_verify()
-      _ -> Bcrypt.verify_pass(password, user.password_hash)
+      nil -> Argon2.no_user_verify()
+      _ -> Argon2.verify_pass(password, user.password_hash)
     end
   end
 end

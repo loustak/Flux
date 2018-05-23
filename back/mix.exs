@@ -22,7 +22,7 @@ defmodule Flux.Mixfile do
       # The main module of the application
       mod: {Flux, []},
       # Extra applications to load
-      extra_applications: [:logger, :bcrypt_elixir],
+      extra_applications: [:logger],
     ]
   end
 
@@ -48,7 +48,7 @@ defmodule Flux.Mixfile do
       # Web server
       {:cowboy, "~> 1.0"},
       # Hashing library
-      {:bcrypt_elixir, "~> 1.0.7"},
+      {:argon2_elixir, "~> 1.3"},
       # Request authentificator
       {:guardian, "~> 1.0.1"},
     ]
