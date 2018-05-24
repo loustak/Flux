@@ -1,4 +1,4 @@
-defmodule Flux.SessionController do
+defmodule Flux.TokenController do
   use Flux.Web, :controller
 
   def create(conn, params) do
@@ -9,7 +9,7 @@ defmodule Flux.SessionController do
 
         conn
         |> put_status(:created)
-        |> render("session.json", user: user, token: token)
+        |> render(Flux.TokenView, "created.json", token: token)
       :error ->
         conn
         |> put_status(:unauthorized)
@@ -17,28 +17,23 @@ defmodule Flux.SessionController do
     end
   end
 
-  def delete(conn, _params) do
-    IO.puts Flux.Guardian.Plug.current_token(conn)
-    Flux.Guardian.Plug.sign_out(conn)
-    IO.puts Flux.Guardian.Plug.current_token(conn)
-
-    conn
-    |> put_status(:ok)
-    |> render("delete.json")
-  end
-
   def refresh(conn, _params) do
     token = Flux.Guardian.Plug.current_token(conn)
 
-    case Flux.Guardian.refresh(token, ttl: {30, :days}) do
-      {:ok, {_old_token, _old_claims}, {new_token, _new_claims}} ->
+    id = Flux.Guardian.Plug.current_resource(conn)
+    user = Repo.get_by(Flux.User, id)
+
+    case user do
+      nil -> 
+        conn
+        |> put_status(:not_found)
+        |> render(Flux.UserView, "not_found.json")
+      _ -> 
+        {:ok, {_old_token, _old_claims}, {new_token, _new_claims}} = Flux.Guardian.refresh(token, ttl: {30, :days})
         conn
         |> put_status(:ok)
-        |> render("token.json", token: new_token)
-      {:error, _reason} ->
-        conn
-        |> put_status(:unauthorized)
-    end
+        |> render(Flux.TokenView, "refresh.json", token: new_token)
+      end
   end
 
   defp authenticate(%{"email" => email, "password" => password}) do

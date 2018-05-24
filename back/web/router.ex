@@ -17,15 +17,14 @@ defmodule Flux.Router do
 
     # public part
     post "/users", UserController, :create
-    post "/session", SessionController, :create
+    post "/token", TokenController, :create
 
     # authentified part
     pipe_through :auth
 
     delete "/users", UserController, :delete
 
-    get "/session/refresh", SessionController, :refresh
-    delete "/session", SessionController, :delete
+    get "/token/refresh", TokenController, :refresh
   end
 
   # at this point, the ressource was not found. send a generic error
