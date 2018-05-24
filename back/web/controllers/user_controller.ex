@@ -10,6 +10,7 @@ defmodule Flux.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
+        |> put_status(:created)
         |> Flux.Guardian.Plug.sign_in(user)
         |> render(Flux.UserView, "create.json", user: user)
 

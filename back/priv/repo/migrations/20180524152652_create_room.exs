@@ -3,10 +3,9 @@ defmodule Flux.Repo.Migrations.CreateRoom do
 
   def change do
     create table(:rooms) do
-      add :name, :string
+      add :name, :string, null: false
       add :public, :boolean, default: false, null: false
-      add :joinable, :boolean, default: false, null: false
-      add :joinable_invitation, :boolean, default: false, null: false
+      add :joinable, :boolean, default: true, null: false
 
       timestamps()
     end

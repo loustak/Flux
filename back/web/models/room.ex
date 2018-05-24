@@ -2,20 +2,17 @@ defmodule Flux.Room do
   use Flux.Web, :model
 
   schema "rooms" do
-    field :name, :string
-    field :public, :boolean, default: false
-    field :joinable, :boolean, default: false
-    field :joinable_invitation, :boolean, default: false
+    field :name, :string, null: false
+    field :public, :boolean, default: false, null: false
+    field :joinable, :boolean, default: true, null: false
 
     timestamps()
   end
 
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :public, :joinable, :joinable_invitation])
-    |> validate_required([:name, :public, :joinable, :joinable_invitation])
+    |> cast(params, [:name, :public, :joinable])
+    |> validate_required([:name, :public, :joinable])
+    |> validate_length(:name, min: 3, max: 24)
   end
 end

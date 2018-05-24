@@ -25,6 +25,11 @@ defmodule Flux.Router do
     delete "/users", UserController, :delete
 
     get "/token/refresh", TokenController, :refresh
+
+    # rooms
+    scope "/rooms" do 
+      post "/", RoomController, :create
+    end
   end
 
   # at this point, the ressource was not found. send a generic error
