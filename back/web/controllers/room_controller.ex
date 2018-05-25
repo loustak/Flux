@@ -5,7 +5,6 @@ defmodule Flux.RoomController do
 
   def create(conn, params) do
     changeset = Room.changeset(%Room{}, params)
-
     case Repo.insert(changeset) do
       {:ok, room} ->
         conn

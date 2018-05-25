@@ -22,16 +22,18 @@ defmodule Flux.Router do
     # authentified part
     pipe_through :auth
 
+    get "/users", UserController, :read
     delete "/users", UserController, :delete
 
     get "/token/refresh", TokenController, :refresh
 
     # rooms
-    scope "/rooms" do 
+    scope "/rooms" do
       post "/", RoomController, :create
       get "/:id", RoomController, :read
       put "/:id", RoomController, :update
       delete "/:id", RoomController, :delete
+      post "/:id/join", UserRoomController, :create
     end
   end
 

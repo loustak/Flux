@@ -5,6 +5,7 @@ defmodule Flux.Room do
     field :name, :string, null: false
     field :public, :boolean, default: false, null: false
     field :joinable, :boolean, default: true, null: false
+    many_to_many :users, Flux.User, join_through: "user_rooms"
 
     timestamps()
   end

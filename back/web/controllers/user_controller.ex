@@ -23,34 +23,31 @@ defmodule Flux.UserController do
 
   def read(conn, _params) do
     id = Flux.Guardian.Plug.current_resource(conn)
-    user = Repo.get_by(Flux.User, id)
-    case user do
-      nil -> 
-        conn
-        |> put_status(:not_found)
-        |> render(Flux.UserView, "not_found.json")
-      _ -> 
-        Repo.delete(user)
-        conn 
-        |> put_status(:ok)
-        |> render(Flux.UserView, "read.json")
-    end
+
+    with {:ok, user} <- user_exists(conn, id), do: 
+      conn 
+      |> put_status(:ok)
+      |> render(Flux.UserView, "read.json", user: user)
   end
 
   def delete(conn, _params) do
     id = Flux.Guardian.Plug.current_resource(conn)
+
+    with {:ok, user} <- user_exists(conn, id), do: 
+      Repo.delete(user)
+      conn 
+      |> put_status(:ok)
+      |> render(Flux.UserView, "delete.json")
+  end
+
+  def user_exists(conn, id) do
     user = Repo.get_by(Flux.User, id)
     case user do
       nil -> 
         conn
         |> put_status(:not_found)
         |> render(Flux.UserView, "not_found.json")
-      _ -> 
-        Repo.delete(user)
-        conn 
-        |> put_status(:ok)
-        |> render(Flux.UserView, "delete.json")
+      _ -> {:ok, user}
     end
   end
-
 end
