@@ -15,4 +15,19 @@ defmodule Flux.RoomView do
       room: render(Flux.RoomView, "show.json", %{room: room})
     }
   end
+
+  def render("update.json", %{room: room}) do
+    %{
+      success: %{detail: "room updated"},
+      room: render(Flux.RoomView, "show.json", %{room: room})
+    }
+  end
+
+  def render("delete.json", _params) do
+    %{success: %{detail: "room deleted"}}
+  end
+
+  def render("not_found.json", _params) do
+    %{error: %{detail: "room not found"}}
+  end
 end

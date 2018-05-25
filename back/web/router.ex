@@ -29,6 +29,9 @@ defmodule Flux.Router do
     # rooms
     scope "/rooms" do 
       post "/", RoomController, :create
+      get "/:id", RoomController, :read
+      put "/:id", RoomController, :update
+      delete "/:id", RoomController, :delete
     end
   end
 
