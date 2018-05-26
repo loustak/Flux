@@ -23,6 +23,7 @@ defmodule Flux.Router do
     pipe_through :auth
 
     get "/users", UserController, :read
+    get "/users/rooms", UserController, :read_rooms
     delete "/users", UserController, :delete
 
     get "/token/refresh", TokenController, :refresh

@@ -24,7 +24,7 @@ defmodule Flux.UserController do
   def read(conn, _params) do
     id = Flux.Guardian.Plug.current_resource(conn)
 
-    with {:ok, user} <- user_exists(conn, id), do: 
+    with {:ok, user} <- user_exists(conn, id), do:
       conn 
       |> put_status(:ok)
       |> render(Flux.UserView, "read.json", user: user)
@@ -38,6 +38,22 @@ defmodule Flux.UserController do
       conn 
       |> put_status(:ok)
       |> render(Flux.UserView, "delete.json")
+  end
+
+  def read_rooms(conn, _params) do
+    %{id: id} = Flux.Guardian.Plug.current_resource(conn)
+    import Ecto.Query, only: [from: 2]
+
+    query = from r in Flux.Room, 
+            join: ur in Flux.UserRoom,
+            where: ur.user_id == ^id, where: ur.room_id == r.id,
+            select: r
+
+    rooms = Repo.all(query)
+
+    conn 
+    |> put_status(:ok)
+    |> render(Flux.UserView, "rooms.json", rooms: rooms)
   end
 
   def user_exists(conn, id) do
