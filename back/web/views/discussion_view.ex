@@ -1,16 +1,29 @@
 defmodule Flux.DiscussionView do
   use Flux.Web, :view
 
-  def render("index.json", %{discussions: discussions}) do
-    %{data: render_many(discussions, Flux.DiscussionView, "discussion.json")}
+  def render("read.json", %{discussion: discussion}) do
+    %{name: discussion.name}
   end
 
-  def render("show.json", %{discussion: discussion}) do
-    %{data: render_one(discussion, Flux.DiscussionView, "discussion.json")}
+  def render("create.json", %{discussion: discussion}) do
+    %{
+      success: %{detail: "discussion created"},
+      discussion: render("read.json", discussion: discussion)
+    }
   end
 
-  def render("discussion.json", %{discussion: discussion}) do
-    %{id: discussion.id,
-      name: discussion.name}
+  def render("update.json", %{discussion: discussion}) do
+    %{
+      success: %{detail: "discussion updated"},
+      discussion: render("read.json", discussion: discussion)
+    }
+  end
+
+  def render("delete.json", _) do
+    %{success: %{detail: "discussion deleted"}}
+  end
+
+  def render("not_found.json", _) do
+    %{error: %{detail: "discussion not found"}}
   end
 end

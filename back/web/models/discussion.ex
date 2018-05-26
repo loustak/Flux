@@ -2,6 +2,7 @@ defmodule Flux.Discussion do
   use Flux.Web, :model
 
   schema "discussions" do
+    belongs_to :communities, Flux.Communities, foreign_key: :community_id
     field :name, :string, null: false
     many_to_many :users, Flux.User, join_through: "user_discussions"
 
@@ -10,7 +11,7 @@ defmodule Flux.Discussion do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
+    |> cast(params, [:community_id, :name])
     |> validate_required([:name])
     |> validate_length(:name, min: 1, max: 24)
   end

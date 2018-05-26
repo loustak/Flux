@@ -36,6 +36,14 @@ defmodule Flux.Router do
       get "/:id/users", CommunityController, :users
       post "/:id/join", UserCommunityController, :create
       delete "/:id/quit", UserCommunityController, :delete
+
+      post "/:community_id/discussions", DiscussionController, :create
+    end
+
+    scope "/discussions" do
+      get "/:id", DiscussionController, :read
+      put "/:id", DiscussionController, :update
+      delete "/:id", DiscussionController, :delete
     end
   end
 
