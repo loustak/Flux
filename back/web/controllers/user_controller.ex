@@ -40,7 +40,7 @@ defmodule Flux.UserController do
       |> render(Flux.UserView, "delete.json")
   end
 
-  def read_rooms(conn, _params) do
+  def rooms(conn, _params) do
     %{id: id} = Flux.Guardian.Plug.current_resource(conn)
     import Ecto.Query, only: [from: 2]
 

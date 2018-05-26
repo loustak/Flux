@@ -23,7 +23,7 @@ defmodule Flux.Router do
     pipe_through :auth
 
     get "/users", UserController, :read
-    get "/users/rooms", UserController, :read_rooms
+    get "/users/rooms", UserController, :rooms
     delete "/users", UserController, :delete
 
     get "/token/refresh", TokenController, :refresh
@@ -33,6 +33,7 @@ defmodule Flux.Router do
       get "/:id", RoomController, :read
       put "/:id", RoomController, :update
       delete "/:id", RoomController, :delete
+      get "/:id/users", RoomController, :users
       post "/:id/join", UserRoomController, :create
       delete "/:id/quit", UserRoomController, :delete
     end

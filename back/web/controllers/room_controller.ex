@@ -23,7 +23,21 @@ defmodule Flux.RoomController do
     with {:ok, room} <- room_exists(conn, id: id), do:
       conn
       |> put_status(:ok)
-      |> render(Flux.RoomView, "show.json", room: room)
+      |> render(Flux.RoomView, "read.json", room: room)
+  end
+
+  def users(conn, %{"id" => id}) do
+    with {:ok, _} <- room_exists(conn, id: id), do:
+      import Ecto.Query, only: [from: 2]
+      query = from u in Flux.User, 
+              join: ur in Flux.UserRoom,
+              where: u.id == ur.user_id and ur.room_id == ^id,
+              select: u
+
+      users = Repo.all(query)
+      conn 
+      |> put_status(:ok)
+      |> render(Flux.UserRoomView, "users.json", users: users)
   end
 
   def update(conn, %{"id" => id} = params) do

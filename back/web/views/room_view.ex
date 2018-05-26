@@ -1,7 +1,7 @@
 defmodule Flux.RoomView do
   use Flux.Web, :view
 
-  def render("show.json", %{room: room}) do
+  def render("read.json", %{room: room}) do
     %{
       name: room.name,
       public: room.public,
@@ -12,14 +12,14 @@ defmodule Flux.RoomView do
   def render("create.json", %{room: room}) do
     %{
       success: %{detail: "room created"},
-      room: render(Flux.RoomView, "show.json", %{room: room})
+      room: render(Flux.RoomView, "read.json", %{room: room})
     }
   end
 
   def render("update.json", %{room: room}) do
     %{
       success: %{detail: "room updated"},
-      room: render(Flux.RoomView, "show.json", %{room: room})
+      room: render(Flux.RoomView, "read.json", %{room: room})
     }
   end
 
