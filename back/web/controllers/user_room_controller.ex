@@ -3,24 +3,19 @@ defmodule Flux.UserRoomController do
 
   alias Flux.UserRoom
 
-  defp insert(conn, params) do
-    changeset = UserRoom.changeset(%UserRoom{}, %{"user_id" => user_id, "room_id" => params.id})
+  defp create(conn, params) do
+    # changeset = UserRoom.changeset(%UserRoom{}, %{"user_id" => user_id, "room_id" => params.id})
 
-    case Repo.insert(changeset) do
-      {:ok, room} ->
-        conn
-        |> put_status(:created)
-        |> render(Flux.UserRoomView, "create.json")
+    # case Repo.insert(changeset) do
+    #   {:ok, room} ->
+    #     conn
+    #     |> put_status(:created)
+    #     |> render(Flux.UserRoomView, "create.json")
 
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Flux.ChangesetView, "error.json", changeset: changeset)
-    end
-  end
-
-  def create(conn, params) do
-    user_id = Flux.Guardian.Plug.current_resource(conn)
-
+    #   {:error, changeset} ->
+    #     conn
+    #     |> put_status(:unprocessable_entity)
+    #     |> render(Flux.ChangesetView, "error.json", changeset: changeset)
+    # end
   end
 end
