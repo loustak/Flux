@@ -6,7 +6,7 @@ defmodule Flux.User do
     field :password_hash, :string
     field :password, :string, virtual: true
     field :username, :string
-    many_to_many :rooms, Flux.Room, join_through: "user_rooms"
+    many_to_many :communities, Flux.Community, join_through: "user_communities"
 
     timestamps()
   end

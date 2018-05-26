@@ -40,20 +40,20 @@ defmodule Flux.UserController do
       |> render(Flux.UserView, "delete.json")
   end
 
-  def rooms(conn, _params) do
+  def communities(conn, _params) do
     %{id: id} = Flux.Guardian.Plug.current_resource(conn)
     import Ecto.Query, only: [from: 2]
 
-    query = from r in Flux.Room, 
-            join: ur in Flux.UserRoom,
-            where: ur.user_id == ^id, where: ur.room_id == r.id,
-            select: r
+    query = from c in Flux.Community, 
+            join: ur in Flux.UserCommunity,
+            where: ur.user_id == ^id, where: ur.community_id == c.id,
+            select: c
 
-    rooms = Repo.all(query)
+    communities = Repo.all(query)
 
     conn 
     |> put_status(:ok)
-    |> render(Flux.UserView, "rooms.json", rooms: rooms)
+    |> render(Flux.UserView, "communities.json", communities: communities)
   end
 
   def user_exists(conn, id) do

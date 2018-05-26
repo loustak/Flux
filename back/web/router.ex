@@ -23,19 +23,19 @@ defmodule Flux.Router do
     pipe_through :auth
 
     get "/users", UserController, :read
-    get "/users/rooms", UserController, :rooms
+    get "/users/community", UserController, :communities
     delete "/users", UserController, :delete
 
     get "/token/refresh", TokenController, :refresh
 
-    scope "/rooms" do
-      post "/", RoomController, :create
-      get "/:id", RoomController, :read
-      put "/:id", RoomController, :update
-      delete "/:id", RoomController, :delete
-      get "/:id/users", RoomController, :users
-      post "/:id/join", UserRoomController, :create
-      delete "/:id/quit", UserRoomController, :delete
+    scope "/communities" do
+      post "/", CommunityController, :create
+      get "/:id", CommunityController, :read
+      put "/:id", CommunityController, :update
+      delete "/:id", CommunityController, :delete
+      get "/:id/users", CommunityController, :users
+      post "/:id/join", UserCommunityController, :create
+      delete "/:id/quit", UserCommunityController, :delete
     end
   end
 

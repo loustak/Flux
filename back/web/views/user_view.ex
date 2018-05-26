@@ -19,10 +19,10 @@ defmodule Flux.UserView do
     %{success: %{detail: "user deleted"}}
   end 
 
-  def render("rooms.json", %{rooms: rooms}) do
+  def render("communities.json", %{communities: communities}) do
     %{
-      success: %{detail: "rooms read"},
-      rooms: render_many(rooms, Flux.RoomView, "show.json")
+      success: %{detail: "communities read"},
+      communities: render_many(communities, Flux.CommunityView, "show.json")
     }
   end
 

@@ -1,11 +1,11 @@
-defmodule Flux.Room do
+defmodule Flux.Community do
   use Flux.Web, :model
 
-  schema "rooms" do
+  schema "communities" do
     field :name, :string, null: false
     field :public, :boolean, default: false, null: false
     field :joinable, :boolean, default: true, null: false
-    many_to_many :users, Flux.User, join_through: "user_rooms"
+    many_to_many :users, Flux.User, join_through: "user_communities"
 
     timestamps()
   end
