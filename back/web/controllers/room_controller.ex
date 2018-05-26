@@ -20,7 +20,7 @@ defmodule Flux.RoomController do
   end
 
   def read(conn, %{"id" => id}) do
-    with {:ok, room} <- room_exists(conn, id), do:
+    with {:ok, room} <- room_exists(conn, id: id), do:
       conn
       |> put_status(:ok)
       |> render(Flux.RoomView, "show.json", room: room)
