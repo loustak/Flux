@@ -7,6 +7,7 @@ defmodule Flux.Community do
     field :joinable, :boolean, default: true, null: false
     
     many_to_many :users, Flux.User, join_through: "user_communities"
+    many_to_many :discussions, Flux.Discussion, join_through: "user_discussions"
 
     timestamps()
   end

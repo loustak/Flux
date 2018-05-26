@@ -12,7 +12,8 @@ defmodule Flux.UserDiscussion do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [])
-    |> validate_required([])
+    |> cast(params, [:user_id, :discussion_id])
+    |> validate_required([:user_id, :discussion_id])
+    |> unique_constraint(:user_id_discussion_id)
   end
 end

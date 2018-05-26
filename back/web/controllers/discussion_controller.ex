@@ -10,7 +10,7 @@ defmodule Flux.DiscussionController do
         conn
         |> put_status(:unprocessable_entity)
         |> render(Flux.ChangesetView, "error.json", changeset: changeset)
-      _ -> conn
+      _ -> {:ok, changeset}
     end
   end
 
@@ -18,7 +18,7 @@ defmodule Flux.DiscussionController do
     changeset = Discussion.changeset(%Discussion{}, params)
     
     with {:ok, discussion} <- Flux.CommunityController.community_exists(conn, id: community_id),
-                              insert(conn, changeset), do:
+         {:ok, _} <- insert(conn, changeset), do:
       conn
       |> put_status(:created)
       |> render(DiscussionView, "create.json", discussion: discussion)
@@ -65,7 +65,7 @@ defmodule Flux.DiscussionController do
           conn
           |> put_status(:unprocessable_entity)
           |> render(Flux.ChangesetView, "error.json", changeset: changeset)
-      _ -> {:ok, discussion}
+      _ -> {:ok, changeset}
     end
   end
 end

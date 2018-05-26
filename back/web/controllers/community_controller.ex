@@ -43,7 +43,7 @@ defmodule Flux.CommunityController do
 
   def update(conn, %{"id" => id} = params) do
     with {:ok, community} <- community_exists(conn, id: id), 
-                        update_changeset(conn, community, params), do:
+         {:ok, _} <- update_changeset(conn, community, params), do:
           conn
           |> put_status(:ok)
           |> render(CommunityView, "update.json", community: community)
@@ -75,7 +75,7 @@ defmodule Flux.CommunityController do
           conn
           |> put_status(:unprocessable_entity)
           |> render(Flux.ChangesetView, "error.json", changeset: changeset)
-      _ -> {:ok, community}
+      _ -> {:ok, changeset}
     end
   end
 

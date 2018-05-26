@@ -10,7 +10,7 @@ defmodule Flux.UserCommunityController do
         conn
         |> put_status(:unprocessable_entity)
         |> render(Flux.ChangesetView, "error.json", changeset: changeset)
-      _ -> conn
+      _ -> {:ok, changeset}
     end
   end
 
@@ -18,11 +18,11 @@ defmodule Flux.UserCommunityController do
     %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
     changeset = UserCommunity.changeset(%UserCommunity{}, %{user_id: user_id, community_id: community_id})
 
-    with {:ok, community} <- Flux.CommunityController.community_exists(conn, id: community_id),
-                        insert(conn, changeset), do:
-        conn
-        |> put_status(:created)
-        |> render(UserCommunityView, "create.json", community: community)
+    with {:ok, community} <- Flux.CommunityController.community_exists(conn, id: community_id), 
+         {:ok, _} <- insert(conn, changeset), do:
+          conn
+          |> put_status(:created)
+          |> render(UserCommunityView, "create.json", community: community)
   end
 
   def delete(conn, %{"id" => community_id}) do
