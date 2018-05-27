@@ -8,7 +8,7 @@ defmodule Flux.User do
     field :username, :string
     
     many_to_many :communities, Flux.Community, join_through: "user_communities"
-    many_to_many :discussions, Flux.Discussions, join_through: "user_discussions"
+    many_to_many :discussions, Flux.Discussion, join_through: "user_discussions"
 
     timestamps()
   end

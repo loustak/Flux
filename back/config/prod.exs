@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :flux, Flux.Endpoint,
   http: [:inet6, port: {:system, "PORT"}],
-  url: [scheme: "https", host: "https://polar-mesa-64081.herokuapp.com/", port: 443],
+  url: [scheme: "https", host: "https://flux-polytech.herokuapp.com/", port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE"),
   check_origin: [] # my front end origins
