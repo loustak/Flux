@@ -36,6 +36,10 @@ defmodule Flux.TokenController do
       end
   end
 
+  # def delete(conn, params) do
+  #   Flux.Guardian.Plug.sign_out(conn)
+  # end
+
   defp authenticate(%{"email" => email, "password" => password}) do
     user = Repo.get_by(Flux.User, email: String.downcase(email))
 
