@@ -51,6 +51,7 @@ defmodule Flux.Mixfile do
       {:argon2_elixir, "~> 1.3"},
       # Request authentificator
       {:guardian, "~> 1.0.1"},
+      {:cors_plug, "~> 1.5"},
     ]
   end
 
