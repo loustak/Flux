@@ -12,7 +12,7 @@ defmodule Flux.Router do
     plug Guardian.Plug.LoadResource
   end
 
-  scope "/api", Flux do
+  scope "/", Flux do
     pipe_through :api
 
     # public part
