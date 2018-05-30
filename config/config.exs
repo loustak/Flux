@@ -19,9 +19,10 @@ config :flux, Flux.Endpoint,
 
 # Configures CORS plug
 config :cors_plug,
-  origin: ["http://localhost:3000"],
+  #origin: "http://127.0.0.1:3000",
+  origin: ~r/http:\/\/localhost:*/,
   max_age: 86400,
-  methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"]
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 
 # Configures Elixir's Logger
 config :logger, :console,
