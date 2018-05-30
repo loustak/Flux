@@ -2,11 +2,11 @@ defmodule Flux.ErrorView do
   use Flux.Web, :view
 
   def render("404.json", %{verb: verb, route: route}) do
-    %{error: %{detail: "ressource not found", verb: verb, route: route}}
+    %{errors: %{detail: "ressource not found", verb: verb, route: route}}
   end
 
   def render("500.json", _assigns) do
-    %{error: %{detail: "internal server error"}}
+    %{errors: %{detail: "internal server error"}}
   end
 
   # In case no render clause matches or no
