@@ -36,7 +36,7 @@ defmodule Flux.Endpoint do
     key: "_flux_key",
     signing_salt: "d+Qi5FNv"
 
-  plug CORSPlug, origin: ["http://localhost:3000"]
+  plug CORSPlug
 
   plug Flux.Router
 end
