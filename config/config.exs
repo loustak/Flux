@@ -17,6 +17,12 @@ config :flux, Flux.Endpoint,
   pubsub: [name: Flux.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Configures CORS plug
+config :cors_plug,
+  origin: ["http://localhost:3000"],
+  max_age: 86400,
+  methods: ["GET", "POST", "DELETE", "PUT"]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

@@ -28,6 +28,12 @@ config :flux, Flux.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true
 
+# Configures CORS plug
+config :cors_plug,
+  origin: [System.get_env("ALLOWED_ORIGIN")],
+  max_age: 86400,
+  methods: ["GET", "POST", "DELETE", "PUT"]
+
 # Do not print debug messages in production
 config :logger, level: :info
 
