@@ -16,6 +16,6 @@ defmodule Flux.TokenView do
   end
 
   def render("auth_error.json", _) do
-    %{error: %{detail: "could not authentificate the user"}}
+    %{errors: %{detail: "could not authentificate the user"}}
   end
 end
