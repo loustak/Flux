@@ -3,6 +3,7 @@ defmodule Flux.CommunityView do
 
   def render("read.json", %{community: community}) do
     %{
+      id: community.id,
       name: community.name,
       public: community.public,
       joinable: community.joinable
