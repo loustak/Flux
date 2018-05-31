@@ -7,8 +7,8 @@ defmodule Flux.UserSocket do
 
   def connect(%{"token" => token}, socket) do
     case Guardian.Phoenix.Socket.authenticate(socket, Flux.Guardian, token) do
-      {:ok, user} ->
-        {:ok, assign(socket, :current_user, user)}
+      {:ok, data} ->
+        {:ok, assign(socket, :current_user, data.assigns.guardian_default_resource)}
       {:error, _} -> 
         :error
     end

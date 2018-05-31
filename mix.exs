@@ -22,7 +22,7 @@ defmodule Flux.Mixfile do
       # The main module of the application
       mod: {Flux, []},
       # Extra applications to load
-      extra_applications: [:logger],
+      extra_applications: [:logger, :scrivener_ecto],
     ]
   end
 
@@ -51,7 +51,10 @@ defmodule Flux.Mixfile do
       {:argon2_elixir, "~> 1.3"},
       # Request authentificator
       {:guardian, "~> 1.0.1"},
+      # To controll access origins
       {:cors_plug, "~> 1.5"},
+      # Use to paginate queries
+      {:scrivener_ecto, "~> 1.0"}
     ]
   end
 

@@ -3,7 +3,7 @@ defmodule Flux.Message do
 
   schema "messages" do
     field :text, :string
-    belongs_to :discussions, Flux.Discussion, foreign_key: :discussion_id
+    belongs_to :discussion, Flux.Discussion, foreign_key: :discussion_id
     belongs_to :user, Flux.User, foreign_key: :user_id
 
     timestamps()
