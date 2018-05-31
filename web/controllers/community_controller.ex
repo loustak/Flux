@@ -41,6 +41,18 @@ defmodule Flux.CommunityController do
       |> render(CommunityView, "users.json", users: users)
   end
 
+  def discussions(conn, %{"id" => id}) do
+    with {:ok, _} <- community_exists(conn, id: id), do:
+    import Ecto.Query, only: [from: 2]
+    query = from d in Flux.Discussion, 
+            where: d.community_id == ^id,
+            select: d
+    discussions = Repo.all(query)
+    conn
+    |> put_status(:ok)
+    |> render(CommunityView, "discussions.json", discussions: discussions)
+  end
+
   def update(conn, %{"id" => id} = params) do
     with {:ok, community} <- community_exists(conn, id: id), 
          {:ok, _} <- update_changeset(conn, community, params), do:

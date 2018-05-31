@@ -2,7 +2,10 @@ defmodule Flux.DiscussionView do
   use Flux.Web, :view
 
   def render("read.json", %{discussion: discussion}) do
-    %{name: discussion.name}
+    %{
+      id: discussion.id,
+      name: discussion.name
+    }
   end
 
   def render("create.json", %{discussion: discussion}) do
