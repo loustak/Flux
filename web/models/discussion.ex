@@ -5,6 +5,7 @@ defmodule Flux.Discussion do
     belongs_to :communities, Flux.Community, foreign_key: :community_id
     field :name, :string, null: false
     many_to_many :users, Flux.User, join_through: "user_discussions"
+    has_many :messages, Flux.Message
 
     timestamps()
   end

@@ -9,6 +9,7 @@ defmodule Flux.User do
     
     many_to_many :communities, Flux.Community, join_through: "user_communities"
     many_to_many :discussions, Flux.Discussion, join_through: "user_discussions"
+    has_many :messages, Flux.Message
 
     timestamps()
   end
