@@ -2,9 +2,8 @@ defmodule Flux.DiscussionChannel do
   use Flux.Web, :channel
 
   def join("discussion:" <> discussion_id, _params, socket) do
-    case Flux.UserDiscussionController.user_discussion_exists_no_conn(socket.assigns.current_user.id, discussion_id) do
-      {:ok, _} ->
-        discussion = Repo.get_by(Flux.Discussion, id: discussion_id)
+    case Flux.DiscussionController.user_discussion_exists_no_conn(socket.assigns.current_user.id, discussion_id) do
+      {:ok, discussion, user} ->
         page = 
           Flux.Message
           |> where([m], m.discussion_id == ^discussion_id)
@@ -20,7 +19,8 @@ defmodule Flux.DiscussionChannel do
         }
 
         {:ok, response, assign(socket, :discussion, discussion)}
-      {:error, _} -> 
+        
+      {:error} ->
         {:error, %{reason: "you are not part of this discussion"}}
     end
   end
