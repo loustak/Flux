@@ -28,7 +28,9 @@ defmodule Flux.CommunityController do
   end
 
   def users(conn, %{"id" => id}) do
-    with {:ok, _} <- community_exists(conn, id: id), do:
+    %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
+
+    with {:ok, _} <- Flux.UserCommunityController.user_community_exists(conn, user_id, id), do:
       import Ecto.Query, only: [from: 2]
       query = from u in Flux.User, 
               join: ur in Flux.UserCommunity,
@@ -42,19 +44,24 @@ defmodule Flux.CommunityController do
   end
 
   def discussions(conn, %{"id" => id}) do
-    with {:ok, _} <- community_exists(conn, id: id), do:
-    import Ecto.Query, only: [from: 2]
-    query = from d in Flux.Discussion, 
-            where: d.community_id == ^id,
-            select: d
-    discussions = Repo.all(query)
-    conn
-    |> put_status(:ok)
-    |> render(CommunityView, "discussions.json", discussions: discussions)
+    %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
+
+    with {:ok, _} <- Flux.UserCommunityController.user_community_exists(conn, user_id, id), do:
+      import Ecto.Query, only: [from: 2]
+      query = from d in Flux.Discussion, 
+              where: d.community_id == ^id,
+              select: d
+      discussions = Repo.all(query)
+      conn
+      |> put_status(:ok)
+      |> render(CommunityView, "discussions.json", discussions: discussions)
   end
 
   def update(conn, %{"id" => id} = params) do
-    with {:ok, community} <- community_exists(conn, id: id), 
+    %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
+
+    with {:ok, _} <- Flux.UserCommunityController.user_community_exists(conn, user_id, id),
+         {:ok, community} <- community_exists(conn, id: id), 
          {:ok, _} <- update_changeset(conn, community, params), do:
           conn
           |> put_status(:ok)
@@ -62,7 +69,10 @@ defmodule Flux.CommunityController do
   end
 
   def delete(conn, %{"id" => id}) do
-    with {:ok, community} <- community_exists(conn, id: id), do:
+    %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
+
+    with {:ok, _} <- Flux.UserCommunityController.user_community_exists(conn, user_id, id),
+         {:ok, community} <- community_exists(conn, id: id), do:
       Repo.delete(community)
       conn 
       |> put_status(:ok)
