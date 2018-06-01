@@ -3,6 +3,7 @@ defmodule Flux.UserView do
 
   def render("read.json", %{user: user}) do
     %{
+      id: user.id,
       username: user.username,
       email: user.email,
     }

@@ -8,7 +8,11 @@ defmodule Flux.UserSocket do
   def connect(%{"token" => token}, socket) do
     case Guardian.Phoenix.Socket.authenticate(socket, Flux.Guardian, token) do
       {:ok, data} ->
-        {:ok, assign(socket, :current_user, data.assigns.guardian_default_resource)}
+        user = Flux.Repo.get_by(Flux.User, data.assigns.guardian_default_resource)
+        case user do
+          nil -> :error
+          _ -> {:ok, assign(socket, :current_user, user)}
+        end
       {:error, _} -> 
         :error
     end

@@ -5,7 +5,15 @@ defmodule Flux.MessageView do
     %{
       id: message.id,
       user_id: message.user_id,
+      time: message.inserted_at,
       text: message.text,
+    }
+  end
+
+  def render("page.json", %{messages: messages, pagination: pagination}) do
+    %{
+      messages: render_many(messages, Flux.MessageView, "read.json"),
+      pagination: pagination
     }
   end
 end

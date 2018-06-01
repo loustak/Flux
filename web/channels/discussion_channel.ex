@@ -13,6 +13,7 @@ defmodule Flux.DiscussionChannel do
 
     response = %{
       discussion: Phoenix.View.render_one(discussion, Flux.DiscussionView, "read.json"),
+      user: Phoenix.View.render_one(socket.assigns.current_user, Flux.UserView, "read.json"),
       messages: Phoenix.View.render_many(page.entries, Flux.MessageView, "read.json"),
       pagination: Flux.PaginationView.pagination(page)
     }
@@ -24,7 +25,7 @@ defmodule Flux.DiscussionChannel do
     require Logger
     Logger.info inspect(socket.assigns.current_user)
     changeset = Flux.Message.changeset(%Flux.Message{}, %{discussion_id: socket.assigns.discussion.id, 
-      user_id: String.to_integer(socket.assigns.current_user.id), text: params})
+      user_id: socket.assigns.current_user.id, text: params})
 
     case Repo.insert(changeset) do
       {:ok, message} ->

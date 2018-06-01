@@ -46,6 +46,7 @@ defmodule Flux.Router do
       delete "/:id", DiscussionController, :delete
       post "/:id/join", UserDiscussionController, :create
       delete "/:id/quit", UserDiscussionController, :delete
+      get "/:discussion_id/:last_message_time", MessageController, :read
     end
   end
 
