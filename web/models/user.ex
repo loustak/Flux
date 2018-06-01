@@ -10,6 +10,7 @@ defmodule Flux.User do
     many_to_many :communities, Flux.Community, join_through: "user_communities"
     many_to_many :discussions, Flux.Discussion, join_through: "user_discussions"
     has_many :messages, Flux.Message
+    has_many :user, Flux.Community, foreign_key: :id
 
     timestamps()
   end
@@ -26,7 +27,7 @@ defmodule Flux.User do
     struct
     |> changeset(params)
     |> cast(params, [:password])
-    |> validate_length(:password, min: 3, max: 32)
+    |> validate_length(:password, min: 6, max: 32)
     |> put_password_hash()
   end
 

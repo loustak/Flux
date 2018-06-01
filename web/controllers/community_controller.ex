@@ -5,6 +5,10 @@ defmodule Flux.CommunityController do
   alias Flux.CommunityView
 
   def create(conn, params) do
+    %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
+    params = Map.put(params, "user_id", user_id)
+    require Logger
+    Logger.debug inspect(params)
     changeset = Community.changeset(%Community{}, params)
 
     case Repo.insert(changeset) do
