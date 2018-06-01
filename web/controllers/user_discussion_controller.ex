@@ -46,4 +46,12 @@ defmodule Flux.UserDiscussionController do
       _ -> {:ok, user_discussion}
     end
   end
+
+  def user_discussion_exists_no_conn(user_id, discussion_id) do
+    user_discussion = Repo.get_by(UserDiscussion, %{user_id: user_id, discussion_id: discussion_id})
+    case user_discussion do
+      nil -> {:error, nil}
+      _ -> {:ok, user_discussion}
+    end
+  end
 end

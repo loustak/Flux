@@ -25,22 +25,31 @@ defmodule Flux.DiscussionController do
   end
 
   def read(conn, %{"id" => id}) do
-    with {:ok, discussion} <- discussion_exists(conn, id), do:
+    %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
+
+    with {:ok, discussion} <- Flux.UserDiscussionController.user_discussion_exists(conn, user_id, id),
+                              discussion_exists(conn, id), do:
       conn
       |> put_status(:ok)
       |> render(DiscussionView, "read.json", discussion: discussion)
   end
 
   def update(conn, %{"id" => id} = params) do
-    with {:ok, discussion} <- discussion_exists(conn, id), 
-                        update_changeset(conn, discussion, params), do:
+    %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
+
+    with {:ok, _} <- Flux.UserDiscussionController.user_discussion_exists(conn, user_id, id),
+         {:ok, discussion} <- discussion_exists(conn, id), 
+                              update_changeset(conn, discussion, params), do:
           conn
           |> put_status(:ok)
           |> render(DiscussionView, "update.json", discussion: discussion)
   end
 
   def delete(conn, %{"id" => id}) do
-    with {:ok, discussion} <- discussion_exists(conn, id), do:
+    %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
+    
+    with {:ok, discussion} <- Flux.UserDiscussionController.user_discussion_exists(conn, user_id, id),
+                              discussion_exists(conn, id), do:
       Repo.delete(discussion)
       conn 
       |> put_status(:ok)
