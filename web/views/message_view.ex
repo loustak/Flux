@@ -4,7 +4,10 @@ defmodule Flux.MessageView do
   def render("read.json", %{message: message}) do
     %{
       id: message.id,
-      user_id: message.user_id,
+      user: %{
+        id: message.user.id,
+        username: message.user.username,
+      },
       time: message.inserted_at,
       text: message.text,
     }
