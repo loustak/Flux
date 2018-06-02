@@ -4,6 +4,7 @@ defmodule Flux.DiscussionView do
   def render("read.json", %{discussion: discussion}) do
     %{
       id: discussion.id,
+      community_id: discussion.community_id,
       name: discussion.name
     }
   end
