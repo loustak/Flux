@@ -9,7 +9,7 @@ Unless specified otherwise all the endpoints need the user to be authentified. T
 
 ### Users
 | Verb | Route | Body | Description | Success | 
-|-----------|-------|------|-------------|
+|-----------|-------|------|-------------|----|
 | post | /users | email, password, username | Create a new user. The password must be at least 6 characters. No authentification required | No | 201 |
 | get | /users | | Get your informations |  200 |
 | get | /users/communities | | Get all the communities you have joined |  200 | 
