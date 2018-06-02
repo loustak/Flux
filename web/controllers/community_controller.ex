@@ -31,6 +31,17 @@ defmodule Flux.CommunityController do
       |> render(CommunityView, "read.json", community: community)
   end
 
+  def all(conn, _params) do
+    import Ecto.Query, only: [from: 2]
+    query = from c in Flux.Community,
+            select: c
+
+    communities = Repo.all(query)
+    conn
+    |> put_status(:ok)
+    |> render(CommunityView, "all.json", communities: communities)
+  end
+
   def users(conn, %{"id" => id}) do
     %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
 

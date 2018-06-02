@@ -28,7 +28,7 @@ defmodule Flux.DiscussionController do
     %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
 
     with {:ok, discussion} <- discussion_exists(conn, id),
-         {:ok, user} <- Flux.UserController.user_exists(conn, id: user_id),
+         {:ok, _} <- Flux.UserController.user_exists(conn, id: user_id),
          {:ok, _} <- Flux.UserCommunityController.user_community_exists(conn, user_id, discussion.community_id), do:
       conn
       |> put_status(:ok)
@@ -39,7 +39,7 @@ defmodule Flux.DiscussionController do
     %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
 
     with {:ok, discussion} <- discussion_exists(conn, id),
-         {:ok, user} <- Flux.UserController.user_exists(conn, id: user_id),
+         {:ok, _} <- Flux.UserController.user_exists(conn, id: user_id),
          {:ok, _} <- Flux.UserCommunityController.user_community_exists(conn, user_id, discussion.community_id),
          {:ok, _} <- update_changeset(conn, discussion, params), do:
       conn
@@ -51,7 +51,7 @@ defmodule Flux.DiscussionController do
     %{id: user_id} = Flux.Guardian.Plug.current_resource(conn)
     
     with {:ok, discussion} <- discussion_exists(conn, id),
-         {:ok, user} <- Flux.UserController.user_exists(conn, id: user_id),
+         {:ok, _} <- Flux.UserController.user_exists(conn, id: user_id),
          {:ok, _} <- Flux.UserCommunityController.user_community_exists(conn, user_id, discussion.community_id), do:
       Repo.delete(discussion)
       conn 
@@ -79,7 +79,7 @@ defmodule Flux.DiscussionController do
           user ->
             case Repo.get_by(Flux.UserCommunity, %{user_id: user.id, community_id: discussion.community_id}) do
               nil -> {:error}
-              user_community ->
+              _ ->
                 {:ok, discussion, user}
             end
         end

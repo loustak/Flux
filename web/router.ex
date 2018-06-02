@@ -30,6 +30,7 @@ defmodule Flux.Router do
 
     scope "/communities" do
       post "/", CommunityController, :create
+      get "/all", CommunityController, :all
       get "/:id", CommunityController, :read
       put "/:id", CommunityController, :update
       delete "/:id", CommunityController, :delete

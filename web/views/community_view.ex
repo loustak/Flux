@@ -18,6 +18,13 @@ defmodule Flux.CommunityView do
     }
   end
 
+  def render("all.json", %{communities: communities}) do
+    %{
+      success: %{detail: "communities read"},
+      communities: render_many(communities, Flux.CommunityView, "read.json")
+    }
+  end
+
   def render("users.json", %{users: users}) do
     %{
       success: %{detail: "users read"},
