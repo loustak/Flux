@@ -17,7 +17,7 @@ Unless specified otherwise all the endpoints need the user to be authentified. T
 
 ### Token
 | Verb | Route | Body | Description | Success | 
-|-----------|-------|------|-------------|
+|-----------|-------|------|-------------|----|
 | post | /token | email, password | Authentifiate the user. Return a JWT. No authentification required | 201 |
 | get | /token/refresh | | Refresh the token | 200 |
 
@@ -25,7 +25,7 @@ Unless specified otherwise all the endpoints need the user to be authentified. T
 You must be part of the community to make use of most of the below endpoints.
 
 | Verb | Route | Body | Description | Success | 
-|-----------|-------|------|-------------|
+|-----------|-------|------|-------------|----|
 | post | /communities | name | Create a new community and join it. Create a default discussion named "main" inside the community | 201 |
 | get | /communities/:id | | Ask informations about the community :id | 200 |
 | put | /communities/:id | name | Update informations of the community :id | 200 |
@@ -39,7 +39,7 @@ You must be part of the community to make use of most of the below endpoints.
 You must be part of the community in which the discussion is to make use of the below endpoints.
 
 | Verb | Route | Body | Description | Success | 
-|-----------|-------|------|-------------|
+|-----------|-------|------|-------------|-----|
 | post | /communities/:community_id/discussions | name | Create a new discussion inside the community :community_id | 201 |
 | get | /discussions/:id | | Ask informations about the disscussions :id | 200 |
 | put | /discussions/:id | name | Update informations of the disscussions :id | 200 |
