@@ -5,6 +5,9 @@ Flux aim to be a fast and secure messaging applications for general purpose.
 
 Built with Elixir & Phoenix.
 
+## Deploy to Heroku
+To deply to Heroku you will need an account with the Heroku CLI. Once installed, go into the repository and run: `chmod +x deploy_heroku.sh` and then `./deploy_heroku.sh`. Your application should be deployed to Heroku.
+
 ## API endpoints
 This API send and receive JSON data.
 Unless specified otherwise all the endpoints need the user to be authentified. To authentificate your request, send it with an 'Authorization' header with a value of 'Bearer: jwt_token' where jwt_token is your JWT. 
